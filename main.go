@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -20,47 +22,47 @@ func main() {
 	db.AutoMigrate(&Product{})
 
 	// // CREATE
-	// db.Create(&Product{
-	// 	Name:  "Notebook",
-	// 	Price: 1000.00,
-	// })
+	db.Create(&Product{
+		Name:  "Notebook",
+		Price: 1000.00,
+	})
 
 	// CREATE BATCH
-	// products := []Product{
-	// 	{Name: "Notebook", Price: 10000.00},
-	// 	{Name: "Mouse", Price: 400.00},
-	// 	{Name: "Keyboard", Price: 600.00},
-	// }
-	// db.Create(&products)
+	products := []Product{
+		{Name: "Notebook", Price: 10000.00},
+		{Name: "Mouse", Price: 400.00},
+		{Name: "Keyboard", Price: 600.00},
+	}
+	db.Create(&products)
 
 	// SELECT ONE
-	// var product Product
+	var product Product
 
-	// db.First(&product, 2)
-	// db.First(&product, "name = ?", "Mouse")
-	// fmt.Println(product)
+	db.First(&product, 2)
+	db.First(&product, "name = ?", "Mouse")
+	fmt.Println(product)
 
 	// SELECT ALL
-	// var products []Product
-	// db.Find(&products)
+	var products []Product
+	db.Find(&products)
 
 	// LIMIT AND PAGINATION
-	// db.Limit(2).Offset(1).Find(&products)
+	db.Limit(2).Offset(1).Find(&products)
 
 	// WHERE
-	// db.Where("NAME LIKE ?", "%k%").Find(&products)
-	// for _, product := range products {
-	// 	fmt.Println(product)
-	// }
+	db.Where("NAME LIKE ?", "%k%").Find(&products)
+	for _, product := range products {
+		fmt.Println(product)
+	}
 
 	// UPDATE
-	// var p Product
-	// db.First(&p, 1)
-	// p.Name = "New Name"
-	// db.Save(&p)
+	var p Product
+	db.First(&p, 1)
+	p.Name = "New Name"
+	db.Save(&p)
 
-	// db.First(&p, 1)
-	// fmt.Println(p)
+	db.First(&p, 1)
+	fmt.Println(p)
 
 	// DELETE
 	var p2 Product
